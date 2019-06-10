@@ -1,30 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutCompat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkBackground"
+    android:orientation="vertical"
+    android:weightSum="100"
     tools:context=".MainActivity">
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/eight_ball_empty"
-        android:clickable="true"
-        android:focusable="true"
-        tools:layout_editor_absoluteX="33dp"
-        tools:layout_editor_absoluteY="115dp" />
+        android:layout_weight="80"
+        >
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:contentDescription="@string/imageDescription"
+            android:layout_width="match_parent"
+            android:layout_height="578dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/eight_ball_empty"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/eight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/eight"
+            android:textSize="135sp"
+            android:textColor="@color/textWhite"
+            android:gravity="center"
+            android:visibility="visible"
+            android:layout_alignStart="@id/imageButton"
+            android:layout_alignTop="@id/imageButton"
+            android:layout_alignEnd="@id/imageButton"
+            android:layout_alignBottom="@id/imageButton"
+            />
+
+
+        <TextView
+            android:id="@+id/answer"
+            android:text=""
+            android:layout_width="186dp"
+            android:layout_height="116dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="@color/lightText"
+            android:textSize="25sp"
+            android:layout_alignStart="@id/imageButton"
+            android:layout_alignTop="@id/imageButton"
+            android:layout_alignEnd="@id/imageButton"
+            android:layout_alignBottom="@id/imageButton" />
+
+
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/answer"
-        android:layout_width="88dp"
-        android:layout_height="70dp"
-        android:text="@string/answer"
+        android:id="@+id/instruction"
+        android:layout_weight="20"
+        android:layout_width="415dp"
+        android:layout_height="99dp"
+        android:text="@string/instruction"
+        android:textAlignment="center"
+        android:textColor="@color/textWhite"
+        android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toRightOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout >
+</androidx.appcompat.widget.LinearLayoutCompat>

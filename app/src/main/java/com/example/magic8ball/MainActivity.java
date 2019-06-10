@@ -20,9 +20,6 @@ public class MainActivity extends AppCompatActivity
     private float mAccelCurrent; // current acceleration including gravity
     private float mAccelLast; // last acceleration including gravity
 
-    private String answer = "Tap or Shake to receive an answer";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +28,7 @@ public class MainActivity extends AppCompatActivity
         //Force portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //Shake sensor setup
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-        mAccel = 0.00f;
-        mAccelCurrent = SensorManager.GRAVITY_EARTH;
-        mAccelLast = SensorManager.GRAVITY_EARTH;
+
 
         onTap();
     }
@@ -54,50 +46,30 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    //Detect phone shaked
-    private final SensorEventListener mSensorListener = new SensorEventListener() {
 
-        public void onSensorChanged(SensorEvent se) {
-            float x = se.values[0];
-            float y = se.values[1];
-            float z = se.values[2];
-            mAccelLast = mAccelCurrent;
-            mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
-            float delta = mAccelCurrent - mAccelLast;
-            mAccel = mAccel * 0.9f + delta; // perform low-cut filter
-        }
 
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-    };
 
-    //On shake
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
-        System.out.println("\nShake detected.\n");
-        onInput();
-    }
-
-    @Override
-    protected void onPause() {
-        mSensorManager.unregisterListener(mSensorListener);
-        System.out.println("\nShake stopped\n");
-        super.onPause();
-    }
 
     //Change text with new answer
     public void onInput()
     {
+        hideEight();
         final TextView answer = findViewById(R.id.answer);
         answer.setText(generateAnswer());
+    }
+
+    public void hideEight()
+    {
+        TextView eight = findViewById(R.id.eight);
+        //Toggle
+        if (eight.getVisibility() == View.VISIBLE)
+            eight.setVisibility(View.INVISIBLE);
     }
 
     //Select random answer to return
     public String generateAnswer()
     {
-        //Random int between 1 & 8inclusive
+        //Random int
         int random =(int) (Math.random()*3+1);
 
         //1 random answer out of 3 is picked

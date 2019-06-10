@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Magic 8 ball</string>
-    <string name="answer" >Tap or Shake to receive an answer </string>
+    <string name="instruction" >Tap or Shake to receive an answer </string>
+    <string name="imageDescription">Tap to change text</string>
+    <string name="eight">8</string>
 </resources>
