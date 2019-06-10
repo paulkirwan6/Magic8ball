@@ -46,10 +46,6 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-
-
-
-
     //Change text with new answer
     public void onInput()
     {
@@ -70,9 +66,9 @@ public class MainActivity extends AppCompatActivity
     public String generateAnswer()
     {
         //Random int
-        int random =(int) (Math.random()*3+1);
+        int random =(int) (Math.random()*10+1);
 
-        //1 random answer out of 3 is picked
+        //1 random answer out of 10 is picked
         switch (random)
         {
             case 1:
@@ -81,6 +77,20 @@ public class MainActivity extends AppCompatActivity
                 return "2";
             case 3:
                 return "3";
+            case 4:
+                return "4";
+            case 5:
+                return "5";
+            case 6:
+                return "6";
+            case 7:
+                return "7";
+            case 8:
+                return "8";
+            case 9:
+                return "9";
+            case 10:
+                return "0";
         }
         //else
         return "";
