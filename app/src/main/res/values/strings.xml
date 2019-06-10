@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Magic8ball</string>
+    <string name="app_name">Magic 8 ball</string>
+    <string name="answer" >Tap or Shake to receive an answer </string>
 </resources>

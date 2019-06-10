@@ -3,10 +3,10 @@ package com.example.magic8ball;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorEventListener2;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
@@ -20,11 +20,16 @@ public class MainActivity extends AppCompatActivity
     private float mAccelCurrent; // current acceleration including gravity
     private float mAccelLast; // last acceleration including gravity
 
+    private String answer = "Tap or Shake to receive an answer";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Force portrait orientation
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //Shake sensor setup
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //onInput();
+                onInput();
                 System.out.println("\nScreen tapped\n");
             }
         });
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
         System.out.println("\nShake detected.\n");
-        //onInput();
+        onInput();
     }
 
     @Override
@@ -82,5 +87,30 @@ public class MainActivity extends AppCompatActivity
         super.onPause();
     }
 
+    //Change text with new answer
+    public void onInput()
+    {
+        final TextView answer = findViewById(R.id.answer);
+        answer.setText(generateAnswer());
+    }
 
+    //Select random answer to return
+    public String generateAnswer()
+    {
+        //Random int between 1 & 8inclusive
+        int random =(int) (Math.random()*3+1);
+
+        //1 random answer out of 3 is picked
+        switch (random)
+        {
+            case 1:
+                return "1";
+            case 2:
+                return "2";
+            case 3:
+                return "3";
+        }
+        //else
+        return "";
+    }
 }
