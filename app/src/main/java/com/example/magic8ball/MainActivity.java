@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
@@ -16,9 +14,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity
 {
     private SensorManager mSensorManager;
-    private float mAccel; // acceleration apart from gravity
-    private float mAccelCurrent; // current acceleration including gravity
-    private float mAccelLast; // last acceleration including gravity
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +25,26 @@ public class MainActivity extends AppCompatActivity
         //Force portrait orientation
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //8Ball is tapped
+        //ShakeDetector initialisation
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        assert mSensorManager != null;
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
+            //Shaking the device is a recognised input
+            @Override
+            public void onShake(int count) {
+                onInput();
+            }
+        });
+
+        //Tap input
         onTap();
     }
 
-    //User tapping the 8ball is a valid input
+    //User tapping the 8ball is a recognised input
     public void onTap()
     {
         ImageButton imageButton = findViewById(R.id.imageButton);
@@ -40,9 +52,22 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 onInput();
-                System.out.println("\nScreen tapped\n");
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the following line to register the Session Manager Listener onResume
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        // Add the following line to unregister the Sensor Manager onPause
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
     }
 
     //Change text with new answer
@@ -78,9 +103,9 @@ public class MainActivity extends AppCompatActivity
             case 5:
                 return "You may rely on it.";
             case 6:
-                return " As I see it, yes.";
+                return "As I see it, yes.";
             case 7:
-                return " Most likely.";
+                return "Most likely.";
             case 8:
                 return "Outlook good.";
             case 9:
